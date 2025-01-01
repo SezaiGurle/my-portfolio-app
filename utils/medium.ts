@@ -9,11 +9,7 @@ export type MediumPost = {
 
 export async function getMediumPosts(): Promise<MediumPost[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-
-    const response = await fetch(`${baseUrl}/api/medium`, {
+    const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@sezaigurle', {
       next: { revalidate: 3600 }
     });
     
@@ -22,7 +18,7 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
     }
 
     const data = await response.json();
-    return Array.isArray(data) ? data : [];
+    return data.items || [];
 
   } catch (error) {
     console.error('Error fetching Medium posts:', error);

@@ -1,3 +1,4 @@
+import { getGithubRepos } from '@/utils/github';
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,31 +6,23 @@ export const metadata: Metadata = {
   description: "My GitHub projects and repositories",
 };
 
-interface Repository {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  stargazers_count: number;
-  language: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-async function getGithubRepos(): Promise<Repository[]> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/github`, {
-    next: { revalidate: 3600 }, // Her saat başı yenileme
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch repositories');
-  }
-
-  return response.json();
-}
+export const dynamic = 'force-dynamic';
 
 export default async function ProjectsPage() {
   const repos = await getGithubRepos();
+
+  if (!repos.length) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-8">My Projects</h1>
+        <div className="text-center py-10">
+          <p className="text-muted-foreground">
+            Projeler yüklenemiyor. Lütfen daha sonra tekrar deneyin.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -62,7 +55,4 @@ export default async function ProjectsPage() {
       </div>
     </div>
   );
-}
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600; 
+} 
