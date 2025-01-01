@@ -37,8 +37,8 @@ export async function GET() {
   try {
     const repos = await fetchGithubRepos();
     return NextResponse.json(repos);
-  } catch (error) {
-    console.error('Medium feed fetch error:');
+  } catch (_error) {
+    console.error('GitHub repositories fetch error');
     return NextResponse.json([]);
   }
 } 
