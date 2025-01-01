@@ -18,10 +18,26 @@ export async function getMediumPosts(): Promise<MediumPost[]> {
     }
 
     const data = await response.json();
-    return data.items || [];
+    
+    // RSS2JSON'dan gelen verileri dönüştür
+    return data.items.map((item: any) => ({
+      title: item.title,
+      link: item.link,
+      pubDate: item.pubDate,
+      content: item.content,
+      thumbnail: item.thumbnail || extractImageFromContent(item.content),
+      categories: item.categories || []
+    }));
 
   } catch (error) {
     console.error('Error fetching Medium posts:', error);
     return [];
   }
+}
+
+// İçerikten ilk resmi çıkaran yardımcı fonksiyon
+function extractImageFromContent(content: string): string {
+  const imgRegex = /<img[^>]+src="([^">]+)"/;
+  const match = content.match(imgRegex);
+  return match ? match[1] : '';
 } 

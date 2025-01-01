@@ -33,17 +33,15 @@ export default async function BlogPage() {
             className="group"
           >
             <div className="border rounded-lg overflow-hidden transition-shadow hover:shadow-lg bg-card">
-              {post.thumbnail && (
-                <div className="relative h-48 w-full">
-                  <Image
-                    src={post.thumbnail}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-              )}
+              <div className="relative h-48 w-full">
+                <Image
+                  src={post.thumbnail || '/images/blog-placeholder.jpg'}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
               
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
