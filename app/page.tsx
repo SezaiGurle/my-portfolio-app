@@ -1,4 +1,3 @@
-import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import { FaGithub, FaLinkedin, FaMedium, FaTwitter, FaInstagram } from "react-icons/fa";
 
@@ -30,10 +29,10 @@ export default function Home() {
                 />
               </div>
               <div className="space-y-4">
-                <h1 className="text-xl font-bold text-center">Hi, I'm Sezai Gürle</h1>
+                <h1 className="text-xl font-bold text-center">Hi, I&apos;m Sezai Gürle</h1>
                 <div className="about-text text-center">
-                  <p>I'm Sezai, a fullstack developer living in Turkey. I started software engineering in 2019 and graduated in 2024 and now I'm here unemployed. I hope I don't break the internet with my little computer. So far so good...</p>
-                  <p>I guess. I'm currently exploring the world of software development and coffee culture.</p>
+                  <p>I&apos;m Sezai, a fullstack developer living in Turkey. I started software engineering in 2019 and graduated in 2024 and now I&apos;m here unemployed. I hope I don&apos;t break the internet with my little computer. So far so good...</p>
+                  <p>I guess. I&apos;m currently exploring the world of software development and coffee culture.</p>
                 </div>
               </div>
               

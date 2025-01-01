@@ -38,9 +38,7 @@ export async function GET() {
     const repos = await fetchGithubRepos();
     return NextResponse.json(repos);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Repositories getirilemedi' },
-      { status: 500 }
-    );
+    console.error('Medium feed fetch error:');
+    return NextResponse.json([]);
   }
 } 

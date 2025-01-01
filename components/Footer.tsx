@@ -1,5 +1,3 @@
-import { FaGithub, FaLinkedin, FaMedium, FaTwitter, FaInstagram } from "react-icons/fa";
-
 export function Footer() {
   return (
     <footer className="border-t mt-auto">
