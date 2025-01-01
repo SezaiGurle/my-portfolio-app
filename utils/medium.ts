@@ -9,8 +9,12 @@ export type MediumPost = {
 
 export async function getMediumPosts(): Promise<MediumPost[]> {
   try {
-    const response = await fetch('http://localhost:3000/api/medium', {
-      cache: 'no-store'
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
+    const response = await fetch(`${baseUrl}/api/medium`, {
+      next: { revalidate: 3600 }
     });
     
     if (!response.ok) {
