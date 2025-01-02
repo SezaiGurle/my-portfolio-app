@@ -4,13 +4,17 @@ import Link from 'next/link';
 
 const ITEMS_PER_PAGE = 6;
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined }
-}) {
+interface PageProps {
+  searchParams: { page?: string };
+}
+
+export default async function BlogPage({ searchParams }: PageProps) {
   const posts = await getMediumPosts();
-  const currentPage = Math.max(1, parseInt(searchParams?.page || '1', 10));
+
+  const currentPage = Math.max(
+    1,
+    Number(searchParams.page || 1)
+  );
 
   const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
   const currentPosts = posts.slice(
