@@ -5,12 +5,11 @@ import Link from 'next/link';
 const ITEMS_PER_PAGE = 6;
 
 type Props = {
-  params: {};
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: Record<string, string | string[] | undefined>;
 };
 
-export default async function BlogPage({ searchParams }: Props) {
-  const pageQuery = await searchParams?.page;
+export default async function BlogPage({ searchParams = {} }: Props) {
+  const pageQuery = searchParams.page;
   const pageNumber = typeof pageQuery === 'string' 
     ? parseInt(pageQuery, 10) 
     : Array.isArray(pageQuery) 
@@ -125,4 +124,4 @@ export default async function BlogPage({ searchParams }: Props) {
       )}
     </div>
   );
-} 
+}
