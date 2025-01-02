@@ -4,14 +4,14 @@ import Link from 'next/link';
 
 const ITEMS_PER_PAGE = 6;
 
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+interface PageProps {
+  searchParams: Record<string, string | string[] | undefined>;
+}
 
-export default async function BlogPage({ searchParams }: Props) {
+export default async function BlogPage(props: PageProps) {
   const [posts, resolvedParams] = await Promise.all([
     getMediumPosts(),
-    Promise.resolve(searchParams)
+    Promise.resolve(props.searchParams)
   ]);
 
   const currentPage = Math.max(1, Number(

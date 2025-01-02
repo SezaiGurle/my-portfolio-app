@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 const ITEMS_PER_PAGE = 9;
 
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+interface PageProps {
+  searchParams: Record<string, string | string[] | undefined>;
+}
 
-export default async function ProjectsPage({ searchParams }: Props) {
+export default async function ProjectsPage(props: PageProps) {
   const [repos, resolvedParams] = await Promise.all([
     getGithubRepos(),
-    Promise.resolve(searchParams)
+    Promise.resolve(props.searchParams)
   ]);
 
   const currentPage = Math.max(1, Number(
