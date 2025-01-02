@@ -2,18 +2,24 @@ import { getMediumPosts } from '@/utils/medium';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
 const ITEMS_PER_PAGE = 6;
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: { page?: string }
-}) {
-  const currentPage = Number(searchParams.page) || 1;
-  const posts = await getMediumPosts();
+type Props = {
+  params: {};
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
+export default async function BlogPage({ searchParams }: Props) {
+  const pageQuery = await searchParams?.page;
+  const pageNumber = typeof pageQuery === 'string' 
+    ? parseInt(pageQuery, 10) 
+    : Array.isArray(pageQuery) 
+      ? parseInt(pageQuery[0], 10) 
+      : 1;
+
+  const posts = await getMediumPosts();
+  
+  const currentPage = !isNaN(pageNumber) ? Math.max(1, pageNumber) : 1;
   const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
   const currentPosts = posts.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
