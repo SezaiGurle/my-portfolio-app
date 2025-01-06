@@ -40,12 +40,10 @@ export default async function BlogPage() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
-              
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                   {post.title}
                 </h2>
-                
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <time dateTime={post.pubDate}>
                     {new Date(post.pubDate).toLocaleDateString('tr-TR', {
@@ -54,7 +52,6 @@ export default async function BlogPage() {
                       day: 'numeric'
                     })}
                   </time>
-                  
                   <div className="flex gap-2">
                     {post.categories?.slice(0, 2).map((category, idx) => (
                       <span key={idx} className="bg-secondary px-2 py-1 rounded-full text-xs">
