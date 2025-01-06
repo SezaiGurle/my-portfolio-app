@@ -2,23 +2,8 @@ import { getMediumPosts } from '@/utils/medium';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ITEMS_PER_PAGE = 6;
-
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | undefined }
-}) {
-  const resolvedSearchParams = await Promise.resolve(searchParams);
-  
+export default async function BlogPage() {
   const posts = await getMediumPosts();
-  const currentPage = Math.max(1, parseInt(resolvedSearchParams?.page || '1', 10));
-
-  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
-  const currentPosts = posts.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
 
   if (!posts.length) {
     return (
@@ -37,7 +22,7 @@ export default async function BlogPage({
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">My Blogs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentPosts.map((post, index) => (
+        {posts.map((post, index) => (
           <Link 
             href={post.link} 
             key={index}
@@ -83,40 +68,6 @@ export default async function BlogPage({
           </Link>
         ))}
       </div>
-
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
-          {currentPage > 1 && (
-            <Link
-              href={`/blog?page=${currentPage - 1}`}
-              className="px-4 py-2 border rounded hover:bg-accent transition-colors"
-            >
-              Previous
-            </Link>
-          )}
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-            <Link
-              key={pageNum}
-              href={`/blog?page=${pageNum}`}
-              className={`px-4 py-2 border rounded transition-colors ${
-                pageNum === currentPage
-                  ? 'bg-primary text-primary-foreground'
-                  : 'hover:bg-accent'
-              }`}
-            >
-              {pageNum}
-            </Link>
-          ))}
-          {currentPage < totalPages && (
-            <Link
-              href={`/blog?page=${currentPage + 1}`}
-              className="px-4 py-2 border rounded hover:bg-accent transition-colors"
-            >
-              Next
-            </Link>
-          )}
-        </div>
-      )}
     </div>
   );
 }
